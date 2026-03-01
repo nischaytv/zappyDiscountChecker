@@ -7,7 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 // import dotenv from 'dotenv';
 // import path from 'path';
-// if (process.env.NODE_ENV !== 'production') {
+// if (!process.env.CI) {
 //   require('dotenv').config();
 // }
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
@@ -35,7 +35,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: 'off',
     // viewport: { width: 1920, height: 1080 }
   },
 
