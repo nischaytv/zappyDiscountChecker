@@ -37,7 +37,7 @@ export class HomePage {
     this.oliveAndColdPressOil = page.getByRole('link', { name: 'Olive & Cold Press Oil Olive' });
     this.oil = page.getByRole('link', { name: 'Oil Oil' });
     this.atta = page.getByRole('link', { name: 'Atta Atta' });
-    this.besanSoojiMaida = page.getByRole('link', { name: 'Besan, Sooji & Maida Besan,' });
+    this.besanSoojiMaida = page.locator('//span[text()="Besan, Sooji & Maida"]');
     this.healthyAttaMillets = page.getByRole('link', { name: 'Healthy Atta & Millets' });
     this.healthyGhee = page.getByRole('link', { name: 'Healthy Ghee Healthy Ghee' });
     this.ghee = page.getByRole('link', { name: 'Ghee Ghee' });
