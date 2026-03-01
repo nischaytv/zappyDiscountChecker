@@ -113,11 +113,11 @@ test.setTimeout(200000);
     // { name: 'Olive & Cold Press Oil', clickMethod: homePage.clickOnOliveAndColdPressOil.bind(homePage) },
     { name: 'Oil', clickMethod: homePage.clickOnOil.bind(homePage) },
     { name: 'Atta', clickMethod: homePage.clickOnAtta.bind(homePage) },
-    { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
+    // { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
     // { name: 'Healthy Atta & Millets', clickMethod: homePage.clickOnHealthyAttaMillets.bind(homePage) },
     // { name: 'Healthy Ghee', clickMethod: homePage.clickOnHealthyGhee.bind(homePage) },
-    // { name: 'Ghee', clickMethod: homePage.clickOnGhee.bind(homePage) },
-    // { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
+    { name: 'Ghee', clickMethod: homePage.clickOnGhee.bind(homePage) },
+    { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
     // { name: 'Healthy Dal', clickMethod: homePage.clickOnHealthyDal.bind(homePage) }
   ];
 
