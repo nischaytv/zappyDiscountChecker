@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 test('Extract By Category with subcategories', async ({ page }) => {
-test.setTimeout(200000);
+test.setTimeout(120000);
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
@@ -116,8 +116,8 @@ test.setTimeout(200000);
     // { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
     // { name: 'Healthy Atta & Millets', clickMethod: homePage.clickOnHealthyAttaMillets.bind(homePage) },
     // { name: 'Healthy Ghee', clickMethod: homePage.clickOnHealthyGhee.bind(homePage) },
-    { name: 'Ghee', clickMethod: homePage.clickOnGhee.bind(homePage) },
-    { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
+    // { name: 'Ghee', clickMethod: homePage.clickOnGhee.bind(homePage) },
+    // { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
     // { name: 'Healthy Dal', clickMethod: homePage.clickOnHealthyDal.bind(homePage) }
   ];
 
