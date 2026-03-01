@@ -8,8 +8,10 @@ on:
 
 jobs:
   test:
-    environment: Prod 
     runs-on: ubuntu-latest
+    env: #define your environment variables
+      URL: ${{secrets.URL}}
+      ADDRESS: ${{secrets.ADDRESS}}
     timeout-minutes: 60
     steps:
       # 1️⃣ Checkout
