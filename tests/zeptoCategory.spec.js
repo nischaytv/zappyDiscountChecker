@@ -108,7 +108,7 @@ test.setTimeout(180000);
   await homePage.clickOnAttaRice();
 
       // Define subcategories dynamically
-  const attaRiceSubCategories = [
+  const attaRiceSubCategories = [ 
     // { name: 'Healthy Picks', clickMethod: homePage.clickOnHealthyPicks.bind(homePage) },
     // { name: 'Olive & Cold Press Oil', clickMethod: homePage.clickOnOliveAndColdPressOil.bind(homePage) },
     { name: 'Oil', clickMethod: homePage.clickOnOil.bind(homePage) },
