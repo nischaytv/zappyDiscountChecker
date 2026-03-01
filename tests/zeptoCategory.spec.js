@@ -31,6 +31,8 @@ test.setTimeout(180000);
     allData = JSON.parse(rawData);
   }
 
+  await page.waitForTimeout(2000);
+
   // Click on main search/category menu
   await homePage.clickOnFruitsAndVegetables();
 
