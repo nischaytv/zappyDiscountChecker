@@ -182,4 +182,38 @@ test.setTimeout(120000);
   // Save all results to single JSON
   fs.writeFileSync(filePath, JSON.stringify(allData, null, 2));
   console.log(`✅ All subcategory products saved to ${filePath}`);
+
+  // Flatten products
+  const allProducts = allData.flatMap(cat => cat.products);
+
+  // Sort by highest discount and take top 15
+  const top15 = allProducts
+    .filter(p => p.discountPercent && p.discountPercent > 0)
+    .sort((a, b) => b.discountPercent - a.discountPercent)
+    .slice(0, 15);
+
+  // Format message for Telegram
+  const message = top15.map((p, index) => {
+    return `🔥 *${index + 1}. ${p.name}*
+Qty: ${p.quantity}
+💰 ₹${p.discountedPrice} (₹${p.actualPrice})
+📉 Discount: ${p.discountPercent}%
+🔗 ${p.link}`;
+  }).join('\n\n');
+
+  // Telegram Bot details
+  const BOT_TOKEN = process.env.BOT_TOKEN;
+  const CHAT_ID = process.env.CHAT_ID;
+  const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+  // Send message to Telegram
+  await page.request.post(telegramURL, {
+    data: {
+      chat_id: CHAT_ID,
+      text: message,
+      parse_mode: 'Markdown'
+    }
+  });
+
+  console.log('✅ Top 15 discount products sent to Telegram!');
 });
