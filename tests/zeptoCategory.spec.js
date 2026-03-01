@@ -18,7 +18,7 @@ test.setTimeout(120000);
   await homePage.selectLocation(
     address,
     address
-  );
+  ); 
 
   // File to store all results
   const fileName = 'category_product_results.json';
