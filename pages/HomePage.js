@@ -1,5 +1,6 @@
 // pages/HomePage.js
 
+import { expect } from '@playwright/test';
 export class HomePage {
   constructor(page) {
     this.page = page;
@@ -55,6 +56,7 @@ export class HomePage {
   async goto() {
     await this.page.goto('https://www.zepto.com/');
     await this.page.waitForLoadState('domcontentloaded');
+    await expect(this.page).toHaveTitle(/Welcome/);
   }
 
   async clickOnHome() {
