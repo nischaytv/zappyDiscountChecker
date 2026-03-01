@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 test('Extract By Category with subcategories', async ({ page }) => {
-test.setTimeout(120000);
+test.setTimeout(180000);
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
@@ -37,11 +37,11 @@ test.setTimeout(120000);
   // Define subcategories dynamically
   const subCategories = [
     { name: 'Fresh Vegetables', clickMethod: homePage.clickOnFreshVegetables.bind(homePage) },
-    // { name: 'Fresh Fruits', clickMethod: homePage.clickOnFreshFruits.bind(homePage) },
-    // { name: 'Exotics & Premium', clickMethod: homePage.clickOnExoticsAndPremium.bind(homePage) },
-    // { name: 'New Launches', clickMethod: homePage.clickOnNewLaunches.bind(homePage) },
+    { name: 'Fresh Fruits', clickMethod: homePage.clickOnFreshFruits.bind(homePage) },
+    { name: 'Exotics & Premium', clickMethod: homePage.clickOnExoticsAndPremium.bind(homePage) },
+    { name: 'New Launches', clickMethod: homePage.clickOnNewLaunches.bind(homePage) },
     // { name: 'Organics & Hydroponics', clickMethod: homePage.clickOnOrganicsAndHydroponics.bind(homePage) },
-    // { name: 'Leafy Herbs & Seasonings', clickMethod: homePage.clickOnLeafyHerbsAndSeasonings.bind(homePage) }
+    { name: 'Leafy Herbs & Seasonings', clickMethod: homePage.clickOnLeafyHerbsAndSeasonings.bind(homePage) }
 
   ];
 
@@ -73,12 +73,12 @@ test.setTimeout(120000);
     // Define subcategories dynamically
   const diarySubCategories = [
     { name: 'Milk', clickMethod: homePage.clickOnMilk.bind(homePage) },
-    // { name: 'Eggs', clickMethod: homePage.clickOnEggs.bind(homePage) },
-    // { name: 'Breads & Buns', clickMethod: homePage.clickOnBreadsAndBuns.bind(homePage) },
-    // { name: 'Fresh Bakery', clickMethod: homePage.clickOnFreshBakery.bind(homePage) },
-    // { name: 'Cheese', clickMethod: homePage.clickOnCheese.bind(homePage) },
-    // { name: 'Batters & Mixes', clickMethod: homePage.clickOnBattersAndMixes.bind(homePage) },
-    // { name: 'Paneer & Cream', clickMethod: homePage.clickOnPaneerAndCream.bind(homePage) },
+    { name: 'Eggs', clickMethod: homePage.clickOnEggs.bind(homePage) },
+    { name: 'Breads & Buns', clickMethod: homePage.clickOnBreadsAndBuns.bind(homePage) },
+    { name: 'Fresh Bakery', clickMethod: homePage.clickOnFreshBakery.bind(homePage) },
+    { name: 'Cheese', clickMethod: homePage.clickOnCheese.bind(homePage) },
+    { name: 'Batters & Mixes', clickMethod: homePage.clickOnBattersAndMixes.bind(homePage) },
+    { name: 'Paneer & Cream', clickMethod: homePage.clickOnPaneerAndCream.bind(homePage) },
 
   ];
 
@@ -113,11 +113,11 @@ test.setTimeout(120000);
     // { name: 'Olive & Cold Press Oil', clickMethod: homePage.clickOnOliveAndColdPressOil.bind(homePage) },
     { name: 'Oil', clickMethod: homePage.clickOnOil.bind(homePage) },
     { name: 'Atta', clickMethod: homePage.clickOnAtta.bind(homePage) },
-    // { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
-    // { name: 'Healthy Atta & Millets', clickMethod: homePage.clickOnHealthyAttaMillets.bind(homePage) },
+    { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
+    { name: 'Healthy Atta & Millets', clickMethod: homePage.clickOnHealthyAttaMillets.bind(homePage) },
     // { name: 'Healthy Ghee', clickMethod: homePage.clickOnHealthyGhee.bind(homePage) },
     // { name: 'Ghee', clickMethod: homePage.clickOnGhee.bind(homePage) },
-    // { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
+    { name: 'Dals & Pulses', clickMethod: homePage.clickOnDalsPulses.bind(homePage) },
     // { name: 'Healthy Dal', clickMethod: homePage.clickOnHealthyDal.bind(homePage) }
   ];
 
@@ -183,37 +183,73 @@ test.setTimeout(120000);
   fs.writeFileSync(filePath, JSON.stringify(allData, null, 2));
   console.log(`✅ All subcategory products saved to ${filePath}`);
 
-  // Flatten products
-  const allProducts = allData.flatMap(cat => cat.products);
 
-  // Sort by highest discount and take top 15
-  const top15 = allProducts
+  // Group products by category
+const categoryMap = {};
+
+for (const item of allData) {
+  const { category, products } = item;
+
+  if (!categoryMap[category]) {
+    categoryMap[category] = [];
+  }
+
+  categoryMap[category].push(...products);
+}
+
+let finalMessage = '';
+
+for (const category in categoryMap) {
+
+  const top5 = categoryMap[category]
     .filter(p => p.discountPercent && p.discountPercent > 0)
     .sort((a, b) => b.discountPercent - a.discountPercent)
-    .slice(0, 15);
+    .slice(0, 5);
 
-  // Format message for Telegram
-  const message = top15.map((p, index) => {
-    return `🔥 *${index + 1}. ${p.name}*
+  if (top5.length === 0) continue;
+
+  finalMessage += `📂 <b>${category}</b>\n\n`;
+
+  top5.forEach((p, index) => {
+    finalMessage += 
+`🔥 <b>${index + 1}. ${p.name}</b>
 Qty: ${p.quantity}
-💰 ₹${p.discountedPrice} (₹${p.actualPrice})
-📉 Discount: ${p.discountPercent}%
-🔗 ${p.link}`;
-  }).join('\n\n');
+💰 ₹${p.discountedPrice} (₹${p.actualPrice ?? 'N/A'})
+📉 ${p.discountPercent}%
+🔗 ${p.link}
 
-  // Telegram Bot details
-  const BOT_TOKEN = process.env.BOT_TOKEN;
-  const CHAT_ID = process.env.CHAT_ID;
-  const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+`;
+  });
 
-  // Send message to Telegram
-  await page.request.post(telegramURL, {
+  finalMessage += `━━━━━━━━━━━━━━━━━━\n\n`;
+}
+
+  const MAX_LENGTH = 4000; // safer than 4096
+
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const CHAT_ID = process.env.CHAT_ID;
+const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+console.log('Message length:', finalMessage.length);
+
+// Split and send safely
+for (let i = 0; i < finalMessage.length; i += MAX_LENGTH) {
+  const chunk = finalMessage.substring(i, i + MAX_LENGTH);
+
+  const response = await page.request.post(telegramURL, {
     data: {
       chat_id: CHAT_ID,
-      text: message,
-      parse_mode: 'Markdown'
+      text: chunk,
+      parse_mode: 'HTML' // safer than Markdown
     }
   });
 
-  console.log('✅ Top 15 discount products sent to Telegram!');
+  const responseBody = await response.json();
+  console.log('Telegram Response:', responseBody);
+}
+
+console.log('✅ All messages sent successfully!');
+
+
+
 });
