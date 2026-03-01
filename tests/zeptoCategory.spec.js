@@ -10,7 +10,7 @@ test('Extract By Category with subcategories', async ({ page }) => {
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
-  const address = process.env.ADDRESS;
+  const address = process.env.ADDRESS; 
 
   await homePage.goto();
 
