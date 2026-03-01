@@ -53,7 +53,7 @@ export class HomePage {
   }
 
   async goto() {
-    await this.page.goto(process.env.URL);
+    await this.page.goto('https://www.zepto.com/');
     await this.page.waitForLoadState('domcontentloaded');
   }
 
