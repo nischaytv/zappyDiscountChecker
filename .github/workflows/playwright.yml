@@ -1,15 +1,10 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
 jobs:
   test:
-    environment: Prod
-    timeout-minutes: 60
+    environment: Prod          # ✅ GitHub Environment
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NODE_ENV: production     # ✅ tells Node to skip local .env
     steps:
       - uses: actions/checkout@v4
 
@@ -23,11 +18,16 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Debug Secrets
+        run: echo "URL = $URL"
+        env:
+          URL: ${{ secrets.URL }}
+
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          URL: ${{ vars.URL }}       # ✅ inject the Prod environment variable
-          ADDRESS: ${{ vars.ADDRESS }} # ✅ inject the Prod environment variable
+          URL: ${{ secrets.URL }}
+          ADDRESS: ${{ secrets.ADDRESS }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
