@@ -69,8 +69,8 @@ export class HomePage {
     await this.selectLocationBtn.click();
     await this.searchTextbox.click();
     await this.searchTextbox.fill(searchText);
-    // dynamic option selection
-    await this.page.getByText(locationOptionText, { exact: false }).click();
+    // dynamic option selection: if more than one matching element is visible, click the first
+    await this.page.getByText(locationOptionText, { exact: false }).first().click();
     await this.page.waitForSelector('//div[@data-testid="address-modal"]', { state: 'detached', timeout: 15000 });
   }
 

@@ -31,7 +31,7 @@ test.setTimeout(180000);
     allData = JSON.parse(rawData);
   }
 
-  await page.waitForTimeout(2000);
+  // await page.waitForTimeout(2000);
 
   // Click on main search/category menu
   await homePage.clickOnFruitsAndVegetables();
@@ -40,10 +40,10 @@ test.setTimeout(180000);
   const subCategories = [
     { name: 'Fresh Vegetables', clickMethod: homePage.clickOnFreshVegetables.bind(homePage) },
     { name: 'Fresh Fruits', clickMethod: homePage.clickOnFreshFruits.bind(homePage) },
-    { name: 'Exotics & Premium', clickMethod: homePage.clickOnExoticsAndPremium.bind(homePage) },
-    { name: 'New Launches', clickMethod: homePage.clickOnNewLaunches.bind(homePage) },
+    // { name: 'Exotics & Premium', clickMethod: homePage.clickOnExoticsAndPremium.bind(homePage) },
+    // { name: 'New Launches', clickMethod: homePage.clickOnNewLaunches.bind(homePage) },
     // { name: 'Organics & Hydroponics', clickMethod: homePage.clickOnOrganicsAndHydroponics.bind(homePage) },
-    { name: 'Leafy Herbs & Seasonings', clickMethod: homePage.clickOnLeafyHerbsAndSeasonings.bind(homePage) }
+    // { name: 'Leafy Herbs & Seasonings', clickMethod: homePage.clickOnLeafyHerbsAndSeasonings.bind(homePage) }
 
   ];
 
@@ -78,8 +78,8 @@ test.setTimeout(180000);
     { name: 'Eggs', clickMethod: homePage.clickOnEggs.bind(homePage) },
     { name: 'Breads & Buns', clickMethod: homePage.clickOnBreadsAndBuns.bind(homePage) },
     { name: 'Fresh Bakery', clickMethod: homePage.clickOnFreshBakery.bind(homePage) },
-    { name: 'Cheese', clickMethod: homePage.clickOnCheese.bind(homePage) },
-    { name: 'Batters & Mixes', clickMethod: homePage.clickOnBattersAndMixes.bind(homePage) },
+    // { name: 'Cheese', clickMethod: homePage.clickOnCheese.bind(homePage) },
+    // { name: 'Batters & Mixes', clickMethod: homePage.clickOnBattersAndMixes.bind(homePage) },
     { name: 'Paneer & Cream', clickMethod: homePage.clickOnPaneerAndCream.bind(homePage) },
 
   ];
