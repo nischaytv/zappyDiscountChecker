@@ -20,7 +20,7 @@ test.setTimeout(180000);
     address
   ); 
 
-  // File to store all results
+  // File to store all results 
   const fileName = 'category_product_results.json';
   const filePath = path.join(process.cwd(), fileName);
 
