@@ -12,6 +12,15 @@ test.setTimeout(180000);
 
   const address = process.env.ADDRESS; 
 
+  await page.route('**/*', (route) => {
+  const resourceType = route.request().resourceType();
+  if (resourceType === 'image' || resourceType === 'font') {
+    route.abort();
+  } else {
+    route.continue();
+  }
+});
+
   await homePage.goto();
   console.log('✅ Navigated to homepage');
 
@@ -64,10 +73,10 @@ test.setTimeout(180000);
   for (const subCat of subCategories) {
     console.log(`🔍 Extracting products for: ${subCat.name}`);
     await subCat.clickMethod();
-    await page.waitForLoadState('networkidle');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(8000);
     const products = await productsPage.getAllProducts();
     const sortedProducts = sortByHighestDiscount(products);
+    await page.waitForTimeout(4000);
 
     // Add metadata
     const entry = {
