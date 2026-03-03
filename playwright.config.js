@@ -31,16 +31,22 @@ export default defineConfig({
   use: {
     navigationTimeout: 60000,
     
-    // launchOptions: {
-    //   slowMo: 1000, // Adds 1000ms (1 second) delay between actions
-    // },
+    launchOptions: {
+      // slowMo: 1000, // Adds 1000ms (1 second) delay between actions
+        args: [
+          '--disable-dev-shm-usage',  // avoids /dev/shm limits
+          '--no-sandbox',
+          '--disable-gpu',
+          '--single-process',          // reduce memory overhead
+        ],
+    },
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: '/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'on',
+    video: 'off',
     // viewport: { width: 1920, height: 1080 }
   },
 
