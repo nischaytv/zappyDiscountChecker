@@ -66,8 +66,8 @@ test.setTimeout(900000);
     // { name: 'Munchies', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/munchies/munchies/cid/d2c2a144-43cd-43e5-b308-92628fa68596/scid/d648ea7c-18f0-4178-a202-4751811b086b") },
     { name: 'Biscuits', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/biscuits/biscuits/cid/2552acf2-2f77-4714-adc8-e505de3985db/scid/3a10723e-ba14-4e5c-bdeb-a4dce2c1bec4") },
     // { name: 'Cleaning Essentials', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/cleaning-essentials/cleaning-essentials/cid/1a7e46a8-e627-450f-8960-490b550eeee6/scid/3b8d9db5-1953-4593-b4ce-8593f6fbd67a") },
-    { name: 'HomePage', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com") },
-  ];
+    // { name: 'HomePage', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com") },
+  ]; 
 
   // Call the click method for each subcategory
   for (const subCat of subCategories) {
