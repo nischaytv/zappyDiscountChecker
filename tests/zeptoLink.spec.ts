@@ -13,12 +13,14 @@ test.setTimeout(180000);
   const address = process.env.ADDRESS; 
 
   await homePage.goto();
+  console.log('✅ Navigated to homepage');
 
   // Location example
   await homePage.selectLocation(
     address,
     address
   ); 
+  console.log(`✅ Location set`);
 
   await page.waitForTimeout(20000); // Wait for location to be set and page to load
 
@@ -60,6 +62,7 @@ test.setTimeout(180000);
 
   // Call the click method for each subcategory
   for (const subCat of subCategories) {
+    console.log(`🔍 Extracting products for: ${subCat.name}`);
     await subCat.clickMethod();
     const products = await productsPage.getAllProducts();
     const sortedProducts = sortByHighestDiscount(products);

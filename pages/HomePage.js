@@ -71,7 +71,7 @@ export class HomePage {
     await this.searchTextbox.fill(searchText);
     // dynamic option selection: if more than one matching element is visible, click the first
     await this.page.getByText(locationOptionText, { exact: false }).first().click();
-    await this.page.waitForSelector('//div[@data-testid="address-modal"]', { state: 'detached', timeout: 15000 });
+    await this.page.waitForSelector('//div[@data-testid="address-modal"]', { state: 'detached', timeout: 60000 });
   }
 
   async clickOnSearch() {
@@ -112,6 +112,10 @@ export class HomePage {
   }
 
   //Sub Category
+  async gotolink(link) {
+    await this.page.goto(link);
+    await this.waitTillLoaderDisappear();
+  }
   async clickOnFreshVegetables() {
     await this.freshVegetables.click();
     await this.waitTillLoaderDisappear();
