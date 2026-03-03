@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 test('Extract By Category with subcategories', async ({ page }) => {
-test.setTimeout(180000);
+test.setTimeout(900000);
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
@@ -20,10 +20,10 @@ test.setTimeout(180000);
     route.continue();
   }
 });
-
+  const randomDelayHome = Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000;
   await homePage.goto();
   console.log('✅ Navigated to homepage');
-
+  await page.waitForTimeout(randomDelayHome);
   // Location example
   await homePage.selectLocation(
     address,
@@ -31,7 +31,7 @@ test.setTimeout(180000);
   ); 
   console.log(`✅ Location set`);
 
-  await page.waitForTimeout(20000); // Wait for location to be set and page to load
+  await page.waitForTimeout(randomDelayHome); // Wait for location to be set and page to load
 
   // File to store all results 
   const fileName = 'category_product_results.json';
@@ -73,10 +73,11 @@ test.setTimeout(180000);
   for (const subCat of subCategories) {
     console.log(`🔍 Extracting products for: ${subCat.name}`);
     await subCat.clickMethod();
-    await page.waitForTimeout(8000);
+    const randomDelay = Math.floor(Math.random() * (9000 - 4000 + 1)) + 4000;
+    await page.waitForTimeout(randomDelay);
     const products = await productsPage.getAllProducts();
     const sortedProducts = sortByHighestDiscount(products);
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(randomDelay);
 
     // Add metadata
     const entry = {
