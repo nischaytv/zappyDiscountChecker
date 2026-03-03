@@ -64,6 +64,8 @@ test.setTimeout(180000);
   for (const subCat of subCategories) {
     console.log(`🔍 Extracting products for: ${subCat.name}`);
     await subCat.clickMethod();
+    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
     const products = await productsPage.getAllProducts();
     const sortedProducts = sortByHighestDiscount(products);
 

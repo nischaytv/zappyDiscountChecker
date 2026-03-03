@@ -89,8 +89,9 @@ export class HomePage {
   }
 
   async waitTillLoaderDisappear() {
-    await this.page.locator("//*[local-name()='svg' and contains(@class,'animate-spin')]")
-  .waitFor({ state: 'detached' });
+    await this.page
+  .locator("//*[local-name()='svg' and contains(@class,'animate-spin')]")
+  .waitFor({ state: 'detached', timeout: 60000 });
   }
 
   //Main Category
