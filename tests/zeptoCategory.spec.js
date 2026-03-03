@@ -5,7 +5,7 @@ import { sortByHighestDiscount } from '../utils/sortUtils';
 import fs from 'fs';
 import path from 'path';
 
-test('Extract By Category with subcategories', async ({ page }) => {
+test.skip('Extract By Category with subcategories', async ({ page }) => {
 test.setTimeout(180000);
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
@@ -113,7 +113,7 @@ test.setTimeout(180000);
   const attaRiceSubCategories = [ 
     // { name: 'Healthy Picks', clickMethod: homePage.clickOnHealthyPicks.bind(homePage) },
     // { name: 'Olive & Cold Press Oil', clickMethod: homePage.clickOnOliveAndColdPressOil.bind(homePage) },
-    { name: 'Oil', clickMethod: homePage.clickOnOil.bind(homePage) },
+    // { name: 'Oil', clickMethod: homePage.clickOnOil.bind(homePage) },
     { name: 'Atta', clickMethod: homePage.clickOnAtta.bind(homePage) },
     { name: 'Besan, Sooji & Maida', clickMethod: homePage.clickOnBesanSoojiMaida.bind(homePage) },
     { name: 'Healthy Atta & Millets', clickMethod: homePage.clickOnHealthyAttaMillets.bind(homePage) },

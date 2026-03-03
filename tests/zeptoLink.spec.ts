@@ -20,6 +20,8 @@ test.setTimeout(180000);
     address
   ); 
 
+  await page.waitForTimeout(20000); // Wait for location to be set and page to load
+
   // File to store all results 
   const fileName = 'category_product_results.json';
   const filePath = path.join(process.cwd(), fileName);
@@ -62,8 +64,6 @@ test.setTimeout(180000);
     const products = await productsPage.getAllProducts();
     const sortedProducts = sortByHighestDiscount(products);
 
-    // console.log(sortedProducts)
-
     // Add metadata
     const entry = {
       category: subCat.name,
@@ -75,8 +75,6 @@ test.setTimeout(180000);
     // Append to array
     allData.push(entry);
 
-
-    // console.log(allData);
   }
 
   // Save all results to single JSON
@@ -149,82 +147,5 @@ for (let i = 0; i < finalMessage.length; i += MAX_LENGTH) {
 }
 
 console.log('✅ All messages sent successfully!');
-
-  
-
-
-
-//   // Save all results to single JSON
-//   fs.writeFileSync(filePath, JSON.stringify(allData, null, 2));
-//   console.log(`✅ All subcategory products saved to ${filePath}`);
-
-
-//   // Group products by category
-// const categoryMap: Record<string, any[]> = {};
-
-// for (const item of allData) {
-//   const { category, products } = item;
-
-//   if (!categoryMap[category]) {
-//     categoryMap[category] = [];
-//   }
-
-//   categoryMap[category].push(...products);
-// }
-
-// let finalMessage = '';
-
-// for (const category in categoryMap) {
-
-//   const top5 = categoryMap[category]
-//     .filter((p: any) => p.discountPercent && p.discountPercent > 0)
-//     .sort((a: any, b: any) => b.discountPercent - a.discountPercent)
-//     .slice(0, 5);
-
-//   if (top5.length === 0) continue;
-
-//   finalMessage += `📂 <b>${category}</b>\n\n`;
-
-//   top5.forEach((p: any, index: number) => {
-//     finalMessage += 
-// `🔥 <b>${index + 1}. ${p.name}</b>
-// Qty: ${p.quantity}
-// 💰 ₹${p.discountedPrice} (₹${p.actualPrice ?? 'N/A'})
-// 📉 ${p.discountPercent}%
-// 🔗 ${p.link}
-
-// `;
-//   });
-
-//   finalMessage += `━━━━━━━━━━━━━━━━━━\n\n`;
-// }
-
-//   const MAX_LENGTH = 4000; // safer than 4096
-
-// const BOT_TOKEN = process.env.BOT_TOKEN;
-// const CHAT_ID = process.env.CHAT_ID;
-// const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-// console.log('Message length:', finalMessage.length);
-
-// // Split and send safely
-// for (let i = 0; i < finalMessage.length; i += MAX_LENGTH) {
-//   const chunk = finalMessage.substring(i, i + MAX_LENGTH);
-
-//   const response = await page.request.post(telegramURL, {
-//     data: {
-//       chat_id: CHAT_ID,
-//       text: chunk,
-//       parse_mode: 'HTML' // safer than Markdown
-//     }
-//   });
-
-//   const responseBody = await response.json();
-//   console.log('Telegram Response:', responseBody);
-// }
-
-// console.log('✅ All messages sent successfully!');
-
-
 
 });
