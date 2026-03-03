@@ -29,7 +29,6 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    actionTimeout: 0,
     navigationTimeout: 60000,
     
     // launchOptions: {
@@ -41,7 +40,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'off',
+    video: 'on',
     // viewport: { width: 1920, height: 1080 }
   },
 
