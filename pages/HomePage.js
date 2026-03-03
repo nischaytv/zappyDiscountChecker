@@ -115,6 +115,7 @@ export class HomePage {
   //Sub Category
   async gotolink(link) {
     await this.page.goto(link);
+    await this.page.waitForTimeout(4000); 
     await this.waitTillLoaderDisappear();
   }
   async clickOnFreshVegetables() {
