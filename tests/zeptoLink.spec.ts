@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 test('Extract By Category with subcategories', async ({ page }) => {
-test.setTimeout(900000);
+test.setTimeout(1020000);
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
@@ -67,7 +67,7 @@ test.setTimeout(900000);
     { name: 'Ice Creams & More', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/ice-creams-more/ice-creams-more/cid/65ee1b69-4e24-45b9-ac84-aace3c0854d8/scid/21c1011a-c677-4007-ac20-abc1542cb89c") },
     { name: 'Munchies', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/munchies/munchies/cid/d2c2a144-43cd-43e5-b308-92628fa68596/scid/d648ea7c-18f0-4178-a202-4751811b086b") },
     { name: 'Biscuits', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/biscuits/biscuits/cid/2552acf2-2f77-4714-adc8-e505de3985db/scid/3a10723e-ba14-4e5c-bdeb-a4dce2c1bec4") },
-    // { name: 'Cleaning Essentials', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/cleaning-essentials/cleaning-essentials/cid/1a7e46a8-e627-450f-8960-490b550eeee6/scid/3b8d9db5-1953-4593-b4ce-8593f6fbd67a") },
+    { name: 'Cleaning Essentials', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/cleaning-essentials/cleaning-essentials/cid/1a7e46a8-e627-450f-8960-490b550eeee6/scid/3b8d9db5-1953-4593-b4ce-8593f6fbd67a") },
     // { name: 'HomePage', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com") },
   ]; 
 
@@ -139,28 +139,44 @@ Qty: ${p.quantity}
   finalMessage += `━━━━━━━━━━━━━━━━━━\n\n`;
 }
 
-  const MAX_LENGTH = 4000; // safer than 4096
-
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
 // console.log('Message length:', finalMessage.length);
 
-// Split and send safely
-for (let i = 0; i < finalMessage.length; i += MAX_LENGTH) {
-  const chunk = finalMessage.substring(i, i + MAX_LENGTH);
+const MAX_LENGTH = 4000;
+const CHUNK_DELAY = 500; // ms
 
+let currentMessage = '';
+const messages: string[] = [];
+
+const lines = finalMessage.split('\n'); // split by lines
+
+for (const line of lines) {
+  if ((currentMessage + line + '\n').length > MAX_LENGTH) {
+    messages.push(currentMessage);
+    currentMessage = '';
+  }
+  currentMessage += line + '\n';
+}
+
+if (currentMessage) {
+  messages.push(currentMessage);
+}
+
+// send each chunk safely
+for (const msg of messages) {
   const response = await page.request.post(telegramURL, {
     data: {
       chat_id: CHAT_ID,
-      text: chunk,
-      parse_mode: 'HTML' // safer than Markdown
+      text: msg,
+      parse_mode: 'HTML',
     }
   });
-
-  const responseBody = await response.json();
+  const body = await response.json();
   console.log('Telegram Response Status:', response.status());
+  await page.waitForTimeout(CHUNK_DELAY);
 }
 
 console.log('✅ All messages sent successfully!');
