@@ -47,7 +47,7 @@ test.setTimeout(900000);
   let allData: any[] = [];
 
   
-  const subCategories = [
+  const subCategories = [ 
     { name: 'Fruits and Veggies', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/fruits-vegetables/all/cid/64374cfe-d06f-4a01-898e-c07c46462c36/scid/e78a8422-5f20-4e4b-9a9f-22a0e53962e3") },
     // { name: 'Fresh Vegetables', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/fruits-vegetables/fresh-vegetables/cid/64374cfe-d06f-4a01-898e-c07c46462c36/scid/b4827798-fcb6-4520-ba5b-0f2bd9bd7208") },
     // { name: 'Fresh Fruits', clickMethod: homePage.gotolink.bind(homePage, "https://www.zepto.com/cn/fruits-vegetables/fresh-fruits/cid/64374cfe-d06f-4a01-898e-c07c46462c36/scid/09e63c15-e5f7-4712-9ff8-513250b79942") },
