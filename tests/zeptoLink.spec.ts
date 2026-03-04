@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 test('Extract By Category with subcategories', async ({ page }) => {
-test.setTimeout(1020000);
+test.setTimeout(1020000); // 17 minutes
   const homePage = new HomePage(page);
   const productsPage = new ProductsPage(page);
 
